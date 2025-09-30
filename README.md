@@ -205,10 +205,3 @@ All API calls are separated into dedicated files under `lib/api/`:
 - Ready for Storybook integration
 - Test-ready architecture
 
-## License
-
-MIT
-
----
-
-Built with ❤️ using v0.app
