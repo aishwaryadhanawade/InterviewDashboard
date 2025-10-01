@@ -40,6 +40,7 @@ export default function CandidatesPage() {
       })
 
       if (result.data) {
+        console.log(result.data)
         setCandidates(result.data.users)
         setTotal(result.data.total)
       }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useAuth } from "@/context/auth-context"
 import { TopNav } from "@/components/top-nav"
@@ -11,7 +11,7 @@ import type { User } from "@/lib/types"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
-export default function CandidateDetailPage({ params }: { params: { id: string } }) {
+export default function CandidateDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { isAuthenticated, isHydrated } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -26,12 +26,14 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
     }
   }, [isAuthenticated, isHydrated, router])
 
+const { id } = React.use(params)
+ 
   useEffect(() => {
     if (!isAuthenticated) return
 
     const fetchCandidate = async () => {
       setIsLoading(true)
-      const result = await getUserById(Number.parseInt(params.id))
+      const result = await getUserById(Number.parseInt(id))
       if (result.data) {
         setCandidate(result.data)
       }
@@ -39,7 +41,7 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
     }
 
     fetchCandidate()
-  }, [params.id, isAuthenticated])
+  }, [id, isAuthenticated])
 
   if (!isHydrated || !isAuthenticated) {
     return null

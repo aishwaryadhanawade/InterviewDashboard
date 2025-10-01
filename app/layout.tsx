@@ -20,11 +20,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" >
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <Suspense fallback={null}>
           <AuthProvider>
-            {children}
+           {/* Full screen container */}
+            <div className="flex min-h-screen w-full items-center justify-center p-4">
+              {/* Responsive content wrapper */}
+              <div className="w-full max-w-4xl">{children}</div>
+            </div>
             <Toaster />
           </AuthProvider>
         </Suspense>
