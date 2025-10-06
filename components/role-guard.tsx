@@ -2,12 +2,12 @@
 
 import type { ReactNode } from "react"
 import { useAuth } from "@/context/auth-context"
-import { hasPermission } from "@/lib/rbac"
+import { hasPermission, permissions } from "@/lib/rbac"
 import type { UserRole } from "@/lib/types"
 
 interface RoleGuardProps {
   children: ReactNode
-  permission?: keyof ReturnType<typeof hasPermission>
+  permission?: keyof typeof permissions.admin
   roles?: UserRole[]
   fallback?: ReactNode
 }

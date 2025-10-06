@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast"
 import { submitFeedback } from "@/lib/api/posts"
 import { Loader2 } from "lucide-react"
+import { Post } from "@/lib/types"
 
 const feedbackSchema = z.object({
   overallScore: z.number().min(1, "Score must be at least 1").max(10, "Score must be at most 10"),
@@ -23,7 +24,7 @@ type FeedbackFormData = z.infer<typeof feedbackSchema>
 
 interface FeedbackFormProps {
   userId: number
-  onSuccess?: () => void
+  onSuccess?: (newPost:Post) => void
 }
 
 export function FeedbackForm({ userId, onSuccess }: FeedbackFormProps) {
@@ -65,7 +66,9 @@ export function FeedbackForm({ userId, onSuccess }: FeedbackFormProps) {
       })
 
       reset()
-      onSuccess?.()
+      if (result.data) {
+        onSuccess?.(result.data)
+      }
     } catch (error) {
       toast({
         title: "Error",

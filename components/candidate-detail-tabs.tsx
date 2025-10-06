@@ -178,16 +178,10 @@ export function CandidateDetailTabs({ candidate, defaultTab = "profile" }: Candi
         <RoleGuard permission="canSubmitFeedback">
           <FeedbackForm
             userId={candidate.id}
-            onSuccess={() => {
-              // Refresh feedback list
-              const fetchPosts = async () => {
-                const result = await getPostsByUserId(candidate.id)
-                if (result.data) {
-                  setPosts(result.data.posts)
-                }
-              }
-              fetchPosts()
-            }}
+            onSuccess={(newPost) => {
+      // Prepend the new feedback to the existing posts list
+      setPosts((prevPosts) => [newPost, ...prevPosts])
+    }}
           />
         </RoleGuard>
 
@@ -210,7 +204,7 @@ export function CandidateDetailTabs({ candidate, defaultTab = "profile" }: Candi
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-medium">{post.title}</h4>
                       <div className="flex gap-1">
-                        {post.tags.map((tag) => (
+                        {post?.tags?.map((tag) => (
                           <Badge key={tag} variant="outline" className="text-xs">
                             {tag}
                           </Badge>
@@ -219,8 +213,8 @@ export function CandidateDetailTabs({ candidate, defaultTab = "profile" }: Candi
                     </div>
                     <p className="text-sm text-muted-foreground whitespace-pre-line">{post.body}</p>
                     <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
-                      <span>{post.reactions.likes} likes</span>
-                      <span>{post.reactions.dislikes} dislikes</span>
+                      <span>{post?.reactions?.likes} likes</span>
+                      <span>{post?.reactions?.dislikes} dislikes</span>
                     </div>
                   </div>
                 ))}
