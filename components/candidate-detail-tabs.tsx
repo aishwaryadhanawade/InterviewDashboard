@@ -125,6 +125,7 @@ export function CandidateDetailTabs({ candidate, defaultTab = "profile" }: Candi
                   alert("Resume download would be implemented here")
                 }}
               >
+                {/* testtt */}
                 Download Resume (PDF)
               </a>
             </div>
